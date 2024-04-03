@@ -1,0 +1,30 @@
+{
+  "students": [
+    {
+      "id": "a628",
+      "studentName": "ROYSTON DAVID",
+      "studentDoB": "2000-02-16T00:00:00.000Z",
+      "studentEmail": "roystondavid349@gmail.com",
+      "studentCurrentAddress": "12/1, Chokkanathapuram 3rd Street, 6th Cross Street, Vilangudi,",
+      "studentPermanentAddress": "12/1, Chokkanathapuram 3rd Street, 6th Cross Street, Vilangudi,",
+      "studentMobileCountryCode": "91",
+      "studentMobileNumber": "8838524693",
+      "studentGender": "male",
+      "studentEnrollmentNumber": "123",
+      "studentSchoolName": "johns"
+    },
+    {
+      "id": "beb2",
+      "studentName": "R",
+      "studentDoB": "1999-02-01T00:00:00.000Z",
+      "studentEmail": "r@gmail.com",
+      "studentCurrentAddress": "adres",
+      "studentPermanentAddress": "adres",
+      "studentMobileCountryCode": "81",
+      "studentMobileNumber": "8838524693",
+      "studentGender": "male",
+      "studentEnrollmentNumber": "1",
+      "studentSchoolName": "d"
+    }
+  ]
+}

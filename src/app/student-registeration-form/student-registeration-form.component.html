@@ -1,0 +1,662 @@
+<div class="container-fluid p-0">
+  <div class="container mt-5 text-end">
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#personalInformationFormModal"
+    >
+      Add Student
+    </button>
+  </div>
+  <div class="container mt-4">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Date of Birth</th>
+          <th>Email</th>
+          <th colspan="3" class="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let std of currentData; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ std.studentName }}</td>
+
+          <td>{{ std.studentDoB | date : "dd-mm-yyyy" }}</td>
+          <td>{{ std.studentEmail }}</td>
+          <td>
+            <div class="d-flex align-items-center justify-content-center">
+              <button class="btn btn-success">View</button>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center justify-content-center">
+              <button
+                class="btn btn-warning text-center d-flex align-items-center justify-content-center"
+              >
+                Edit
+              </button>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center justify-content-center">
+              <button
+                class="btn btn-danger text-center d-flex align-items-center justify-content-center"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Personal Information Form -->
+<div
+  class="modal fade"
+  id="personalInformationFormModal"
+  tabindex="-1"
+  aria-labelledby="personalInformationFormModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="personalInformationFormModalLabel">
+          Registeration Form
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <h4 class="text-center">Personal Information</h4>
+          <div class="">
+            <div class="">
+              <form [formGroup]="studentForm">
+                <!-- Name C -->
+                <div class="form-group row">
+                  <label for="studentName" class="col-sm-2 col-form-label"
+                    >Name</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="text"
+                      name="studentName"
+                      id="studentName"
+                      formControlName="studentName"
+                      class="form-control"
+                    />
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (studentForm.get('studentName')?.invalid &&
+                        studentForm.get('studentName')?.dirty) ||
+                      studentForm.get('studentName')?.touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        studentForm.get('studentName')?.hasError('required')
+                      "
+                    >
+                      Feild is Requried
+                    </span>
+                    <span
+                      *ngIf="
+                        studentForm.get('studentName')?.hasError('pattern')
+                      "
+                    >
+                      Pattern Mismatched
+                    </span>
+                  </span>
+                </div>
+                <!-- DOB -->
+                <div class="form-group row mt-1">
+                  <label for="studentDoB" class="col-sm-2 col-form-label"
+                    >Date of Birth</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="date"
+                      name="studentDoB"
+                      id="studentDoB"
+                      class="form-control"
+                      formControlName="studentDoB"
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      studentForm.get('studentDoB')?.hasError('required') &&
+                      studentForm.get('studentDoB')?.touched
+                    "
+                    class="col-sm-9 offset-sm-2 text-danger"
+                  >
+                    Date of Birth is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      studentForm
+                        .get('studentDoB')
+                        ?.hasError('dateAfter2000') &&
+                      studentForm.get('studentDoB')?.touched
+                    "
+                    class="col-sm-9 offset-sm-2 text-danger"
+                  >
+                    Date of Birth must be on or before the year 2000.
+                  </div>
+                </div>
+                <!-- Email  -->
+                <div class="form-group row mt-1">
+                  <label for="studentDoB" class="col-sm-2 col-form-label"
+                    >Email</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="email"
+                      name="studentEmail"
+                      id="studentEmail"
+                      class="form-control"
+                      formControlName="studentEmail"
+                    />
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (studentForm.get('studentEmail')?.invalid &&
+                        studentForm.get('studentEmail')?.dirty) ||
+                      studentForm.get('studentEmail')?.touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        studentForm.get('studentEmail')?.hasError('required')
+                      "
+                    >
+                      Feild is Requried
+                    </span>
+                    <span
+                      *ngIf="studentForm.get('studentEmail')?.hasError('email')"
+                    >
+                      Email Format Mismatched
+                    </span>
+                  </span>
+                </div>
+                <!-- Mobile Number  -->
+                <div class="form-group row mt-1">
+                  <label for="studentDoB" class="col-sm-2 col-form-label"
+                    >Mobile No</label
+                  >
+                  <div class="col-sm-2">
+                    <input
+                      type=""
+                      name="studentMobileCountryCode"
+                      id="studentMobileCountryCode"
+                      class="form-control"
+                      formControlName="studentMobileCountryCode"
+                    />
+                  </div>
+
+                  <div class="col-sm-7">
+                    <input
+                      type="text"
+                      name="studentMobileNumber"
+                      id="studentMobileNumber"
+                      class="form-control"
+                      formControlName="studentMobileNumber"
+                    />
+                  </div>
+                  <div>
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        (studentForm.get('studentMobileNumber')?.invalid &&
+                          studentForm.get('studentMobileNumber')?.dirty) ||
+                        studentForm.get('studentMobileNumber')?.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          studentForm
+                            .get('studentMobileNumber')
+                            ?.hasError('pattern')
+                        "
+                      >
+                        Only Digit Not more than 10 digit
+                      </span>
+
+                      <span
+                        *ngIf="
+                          studentForm
+                            .get('studentMobileNumber')
+                            ?.hasError('required')
+                        "
+                      >
+                        Feild is Requried
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <!-- Gender  -->
+                <div class="form-group row mt-1">
+                  <label for="studentGender" class="col-sm-2 col-form-label"
+                    >Gender</label
+                  >
+                  <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="studentGender"
+                        id="male"
+                        class="form-check-input"
+                        formControlName="studentGender"
+                        value="male"
+                      />
+                      <label for="male" class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="studentGender"
+                        id="female"
+                        class="form-check-input"
+                        formControlName="studentGender"
+                        value="female"
+                      />
+                      <label for="female" class="form-check-label"
+                        >Female</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="studentGender"
+                        id="other"
+                        class="form-check-input"
+                        formControlName="studentGender"
+                        value="other"
+                      />
+                      <label for="other" class="form-check-label">Other</label>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- VAlidation -->
+                  </div>
+                </div>
+                <!-- Current Address  -->
+                <div class="form-group row mt-1">
+                  <label
+                    for="studentCurrentAddress"
+                    class="col-sm-2 col-form-label"
+                    >Current Address</label
+                  >
+                  <div class="col-sm-9">
+                    <textarea
+                      name="studentCurrentAddress"
+                      id="studentCurrentAddress"
+                      class="form-control"
+                      formControlName="studentCurrentAddress"
+                    ></textarea>
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (studentForm.get('studentCurrentAddress')?.invalid &&
+                        studentForm.get('studentCurrentAddress')?.dirty) ||
+                      studentForm.get('studentCurrentAddress')?.touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        studentForm
+                          .get('studentCurrentAddress')
+                          ?.hasError('required')
+                      "
+                    >
+                      Feild is Requried
+                    </span>
+                  </span>
+                </div>
+                <!-- Permanent Address  -->
+                <div class="form-group row mt-1">
+                  <label
+                    for="studentPermanentAddress"
+                    class="col-sm-2 col-form-label"
+                    >Permanent Address</label
+                  >
+                  <div class="col-sm-9">
+                    <textarea
+                      name="studentPermanentAddress"
+                      id="studentPermanentAddress"
+                      class="form-control"
+                      formControlName="studentPermanentAddress"
+                    ></textarea>
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (studentForm.get('studentPermanentAddress')?.invalid &&
+                        studentForm.get('studentPermanentAddress')?.dirty) ||
+                      studentForm.get('studentPermanentAddress')?.touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        studentForm
+                          .get('studentPermanentAddress')
+                          ?.hasError('required')
+                      "
+                    >
+                      Feild is Requried
+                    </span>
+                  </span>
+                </div>
+                <!-- Same address check box -->
+                <div class="form-group row mt-1">
+                  <div class="col-2"></div>
+
+                  <div class="col-sm-9 form-check ms-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckDefault"
+                      (change)="copyAddress($event)"
+                    />
+                    <label class="form-check-label" for="flexCheckDefault">
+                      Same as Current Address
+                    </label>
+                  </div>
+
+                  <div></div>
+                </div>
+                <!-- State Selection -->
+                <div class="form-group row mt-1">
+                  <label for="studentState" class="col-sm-2 col-form-label"
+                    >State</label
+                  >
+                  <div class="col-sm-9">
+                    <select
+                      class="form-select"
+                      aria-label="Student State select"
+                    >
+                      <option *ngFor="let state of regions">
+                        {{ state.state_name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div></div>
+                </div>
+                <!-- District Selection -->
+                <div class="form-group row mt-1">
+                  <label for="studentState" class="col-sm-2 col-form-label"
+                    >District</label
+                  >
+                  <div class="col-sm-9">
+                    <select
+                      class="form-select"
+                      aria-label="Student State select"
+                    >
+                      <option *ngFor="let dist of regions">
+                        {{ dist.district_name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div></div>
+                </div>
+                <!-- Academic Information -->
+                <h4 class="text-center mt-3">Academic Information</h4>
+
+                <div class="row">
+                  <!-- Enrollment Number -->
+                  <div class="col-12 col-md-6">
+                    <div class="form-group row mt-1">
+                      <label
+                        for="studentEnrollmentNumber"
+                        class="col-sm-4 col-form-label"
+                        >Enrollment Number</label
+                      >
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          name="studentEnrollmentNumber"
+                          id="studentEnrollmentNumber"
+                          class="form-control"
+                          formControlName="studentEnrollmentNumber"
+                        />
+                      </div>
+                      <div>
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            (studentForm.get('studentEnrollmentNumber')
+                              ?.invalid &&
+                              studentForm.get('studentEnrollmentNumber')
+                                ?.dirty) ||
+                            studentForm.get('studentEnrollmentNumber')?.touched
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              studentForm
+                                .get('studentEnrollmentNumber')
+                                ?.hasError('required')
+                            "
+                          >
+                            Feild is Requried
+                          </span>
+                          <span
+                            *ngIf="
+                              studentForm
+                                .get('studentEnrollmentNumber')
+                                ?.hasError('pattern')
+                            "
+                          >
+                            Alpha Numeric Only
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- School Name  -->
+                  <div class="col-12 col-md-6">
+                    <div class="form-group row mt-1">
+                      <label
+                        for="studentSchoolName"
+                        class="col-sm-3 col-form-label"
+                        >School Name
+                      </label>
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          name="studentSchoolName"
+                          id="studentSchoolName"
+                          class="form-control"
+                          formControlName="studentSchoolName"
+                        />
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mark Information  -->
+                <h4 class="text-start mt-3">Mark Information</h4>
+                <div class="row">
+                  <!-- Subject Name -->
+                  <div class="col-12 col-md-4">
+                    <div class="row">
+                      <label
+                        for="studentSubjectName"
+                        class="text-center form-label"
+                      >
+                        Subject Name</label
+                      >
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="text"
+                          name="studentSubjectName"
+                          id="studentSubjectName"
+                          class="form-control w-75 mx-auto"
+                          formControlName="studentSubjectName"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Subject Mark -->
+                  <div class="col-12 col-md-4">
+                    <div class="row">
+                      <label
+                        for="studentSubjectMark"
+                        class="text-center form-label"
+                      >
+                        Subject Mark</label
+                      >
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="text"
+                          name="studentSubjectMark"
+                          id="studentSubjectMark"
+                          class="form-control w-75 mx-auto"
+                          formControlName="studentSubjectMark"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Add Button -->
+                  <div
+                    class="col-12 col-md-4 d-flex align-items-center justify-content-center mt-2"
+                  >
+                    <button class="btn btn-primary" (click)="addSubject()">
+                      Add
+                    </button>
+                  </div>
+                </div>
+                <!-- Display mark -->
+                <div class="mt-3 mx-2">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="text-center">
+                        <th>S.No</th>
+                        <th>Subject Name</th>
+                        <th>Mark</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let subject of subjectDetails; let i = index"
+                        class="text-center"
+                      >
+                        <td>{{ i + 1 }}</td>
+                        <td>
+                          <ng-container
+                            *ngIf="editIndex !== i; else editModeName"
+                          >
+                            {{ subject.name }}
+                          </ng-container>
+                          <ng-template #editModeName>
+                            <input
+                              type="text"
+                              formControlName="editedSubjectName"
+                              class="form-control"
+                            />
+                          </ng-template>
+                        </td>
+                        <td>
+                          <ng-container
+                            *ngIf="editIndex !== i; else editModeMark"
+                          >
+                            {{ subject.mark }}
+                          </ng-container>
+                          <ng-template #editModeMark>
+                            <input
+                              type="text"
+                              formControlName="editedSubjectMark"
+                              class="form-control"
+                            />
+                          </ng-template>
+                        </td>
+                        <td>
+                          <button
+                            *ngIf="editIndex === i"
+                            class="btn btn-success"
+                            (click)="saveSubject(i)"
+                          >
+                            Save
+                          </button>
+                          <button
+                            class="btn btn-danger"
+                            (click)="removeSubject(i)"
+                          >
+                            Remove
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="row">
+                  <div class="col-2"></div>
+                  <div class="col-4">Captcha</div>
+                  <div class="col-4">
+                    <input type="text" name="" id="" />
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-2"></div>
+                  <div class="col-4">Verify</div>
+                  <div class="col-4">
+                    <input type="text" name="" id="" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckDefault"
+                    />
+                    <label class="form-check-label" for="flexCheckDefault">
+                      I Agree
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="submitForm()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
